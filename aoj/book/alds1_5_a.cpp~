@@ -1,0 +1,37 @@
+#include <iostream>
+#include <vector>
+#include <set>
+#include <algorithm>
+using namespace std;
+bool isYes(int, multiset<int>);
+
+int main() {
+  int na;
+  cin >> na;
+  multiset<int> as;
+  for(int in = 0; in < na; ++in) {
+    int a;
+    cin >> a;
+    as.insert(a);
+  }
+  int nq;
+  cin >> nq;
+  for(int iq = 0; iq < nq; ++iq) {
+    int q;
+    cin >> q;
+    cout << (isYes(q, as) ? "yes" : "no") << endl;
+  }
+  return 0;
+}
+
+bool isYes(int q, multiset<int> as) {
+  bool rtn = false;
+  if(q == 0) return true;
+  if(q < 0) return false;
+  for(auto&& a : as) {
+    auto as2 = as;
+    as2.erase(as2.find(a));
+    rtn |= isYes(q - a, as2);
+  }
+  return rtn;
+}
